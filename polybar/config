@@ -1,0 +1,326 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;==========================================================
+
+[colors]
+black           = #000000
+white           = #FFFFFF
+red             = #FF0000
+green           = #00FF00
+blue            = #0000FF
+grey            = #AAAAAA
+dark-grey       = #2f343f
+orange          = #E53935
+
+[bar/bar1]
+; monitor = ${env:MONITOR:HDMI-1}
+monitor = eDP-1-1
+width = 100%
+height = 20
+bottom = true
+;offset-x = 1%
+;offset-y = 1%
+radius = 6.0
+fixed-center = true
+;override-redirect = true
+;wm-restack = i3
+enable-ipc = true
+
+background = ${colors.dark-grey}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 1
+
+font-0 = pango:SystemSanFransisco:style=Regular:size=10;2
+font-1 = FontAwesome5Free:style=Solid:pixelsize=10:antialias=false;2
+font-2 = FontAwesome5Brands:style=Solid:pixelsize=10:antialias=false;2
+
+
+
+;;;;;;;;;;;;;;;; MODULES ;;;;;;;;;;;;;;;;;;;
+
+modules-left = alsa mpd
+modules-center = i3
+modules-right = updates wlan eth battery date powermenu
+tray-padding = 4
+tray-transparent = true
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/i3]
+type = internal/i3
+enable-click = true
+enable-scroll = true
+wrapping-scroll = false
+fuzzy-match = true
+index-sort = true
+strip-wsnumbers = true
+
+label-focused = %icon% %name%
+label-focused-foreground = ${colors.white}
+label-focused-background = ${colors.orange}
+label-focused-padding = 5
+
+label-unfocused = %icon% %name%
+label-unfocused-foreground = ${colors.grey}
+label-unfocused-background = ${colors.dark-grey}
+label-unfocused-padding = 5
+
+label-visible = %icon% %name%
+label-visible-padding = 5
+
+label-urgent = %icon% %name%
+label-urgent-foreground = ${colors.grey}
+label-urgent-background = ${colors.dark-grey}
+label-urgent-padding = 5
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/updates]
+type = custom/script
+interval = 600
+format-padding = 2
+format = <label>
+exec = ~/.config/polybar/updates.sh
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/mpd]
+type = internal/mpd
+interval = 1
+
+;host = 127.0.0.1
+;port = 8000
+
+format-online = <icon-prev> <icon-stop> <toggle> <icon-next> <icon-random> <icon-repeat> <label-song> <label-time>
+
+label-song-padding = 5
+wrapping-scroll = true
+
+format-stopped = ${self.format-online}  
+label-time = %elapsed% / %total%
+
+format-offline = "<label-offline>"
+label-offline = "MPD Offline"
+
+icon-prev = 
+icon-prev-padding-left = 1
+
+icon-stop = 
+icon-stop-padding-left = 1
+
+icon-play = 
+icon-play-padding-left = 1
+
+icon-pause = 
+icon-pause-padding-left = 1
+
+icon-next = 
+icon-next-padding-left = 1
+
+icon-random = 
+icon-random-padding-left = 1
+
+icon-repeat = 
+icon-repeat-padding-left = 1
+
+; bar-progress-format = %fill%%{-o -u}%indicator%%{-o -u}%empty%%{-o -u}
+; bar-progress-width = 25
+; bar-progress-indicator = 
+; bar-progress-fill = •
+; bar-progress-empty = ·
+; bar-progress-empty-font = 1
+; bar-progress-indicator-font = 1
+; bar-progress-fill-font = 1
+; bar-progress-fill-foreground = ${colors.white}
+; bar-progress-empty-foreground = ${colors.white}
+; bar-progress-indicator-foreground = ${colors.white}
+; bar-progress-padding = 2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = " CPU: "
+label = %percentage:2%%
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/memory]
+type = internal/memory
+format-prefix = " Mem: "
+interval = 2
+label = %percentage_used%%
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/wlan]
+type = internal/network
+interface = wlp5s0
+interval = 3.0
+
+format-connected-prefix = " "
+label-connected = %local_ip%
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/eth]
+type = internal/network
+interface = enp4s0
+interval = 3.0
+
+format-connected-prefix = " "
+format-connected = <label-connected>
+label-connected = "%local_ip% "
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/alsa]
+type = internal/alsa
+format-volume-padding = 2
+
+label-muted = "  Mute  "
+
+format-volume-prefix = " "
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+full-at = 99
+time-format = %H:%M
+
+format-full-prefix = "   "
+
+format-charging = <animation-charging> <label-charging>
+animation-charging-0 = "    "
+animation-charging-1 = "    "
+animation-charging-2 = "    "
+animation-charging-framerate = 750
+
+format-discharging = <ramp-capacity> <label-discharging> 
+;label-discharging = %time%
+ramp-capacity-0 = "   "
+ramp-capacity-1 = "   "
+ramp-capacity-2 = "   "
+ramp-capacity-3 = "   "
+ramp-capacity-4 = "   "
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/temperature]
+format-prefix = " "
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+
+label = %temperature-c%
+label-warn = %temperature-c%
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/powermenu]
+type = custom/menu
+
+format-spacing = 1
+
+label-open = 
+label-close = 
+;
+label-separator = " "
+expand-left = true
+menu-open = LEVEL
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+menu-0-2 = "X   "
+
+menu-1-0 = reboot
+menu-1-0-exec = menu-open-0
+menu-1-1 = "X   "
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = "X   "
+menu-2-1-exec = menu-open-0
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[module/date]
+label-open = 
+menu-0-0-exec = cal
+type = internal/date
+; format-prefix = "     "
+label = %date% %time%
+interval = 30
+date = "   |  %A,  %b. %d %Y  | "
+time = "%H:%M   | "
+;date-alt = " %m-%d-%Y"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[settings]
+screenchange-reload = true
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+; vim:ft=dosini
