@@ -1,0 +1,31 @@
+# Opacity
+menu-opacity = 0.8;
+inactive-opacity = 0.8;
+active-opacity = .95;
+frame-opacity = 0;
+detect-transient = true;
+detect-client-leader = true;
+inactive-opacity-override = false;
+# alpha-step = 0.06;
+# inactive-dim = 0.2;
+# inactive-dim-fixed = true;
+# blur-background = true;
+# blur-background-frame = true;
+# blur-kern = "3x3box";
+# blur-kern = "5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
+# blur-background-fixed = true;
+# blur-background-exclude = [
+# 	"window_type = 'dock'",
+# 	"window_type = 'desktop'",
+# 	"_GTK_FRAME_EXTENTS@:c"
+# ];
+
+opacity-rule = [ "90:class_g = 'URxvt'",
+                 "90:class_g = 'gnome-terminal'",
+                 "99:class_g = 'libreoffice-writer'",
+                 "99:class_g = 'libreoffice-calc'",
+                 "99:class_g = 'libreoffice-impress'",
+                 "99:class_g = 'libreoffice-draw'",
+                 "92:class_g = 'gnome-calendar'",
+                 "92:class_g = 'Rofi'"
+               ];

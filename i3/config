@@ -1,0 +1,295 @@
+# i3 config file (v4)
+
+
+#################################
+#                               # 
+#       Personal Config         #
+#                               #
+#################################
+
+# Mod Key
+set $mod Mod4
+
+# Font for window titles
+font pango:System San Fransisco Display 9;2
+for_window [class="^.*"] border pixel 1
+new_window 1pixel
+
+# Startup Scripts
+exec_always setxkbmap -option ctrl:nocaps
+exec_always synclient HorizTwoFingerScroll=1
+exec_always --no-Startup-id numlockx on
+exec compton -b --config ~/.config/i3/compton
+exec --no-startup-id ~/.config/polybar/launch.sh &
+exec python3 ~/.config/i3/i3listen.py
+exec bash ~/.config/i3/autolock.sh
+exec xset s off
+exec xset s noblank
+# exec bash ~/.config/i3/startmusic.sh
+
+
+# Startup Applications
+# exec mpd
+# exec google-chrome
+# exec firefox
+exec gnome-calendar
+# exec spotify
+exec oblogout
+
+
+# Launch Applications
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Shift+Return exec urxvt
+bindsym $mod+d exec rofi -show drun
+bindsym $mod+Shift+g exec google-chrome
+bindsym $mod+Shift+f exec firefox
+bindsym $mod+n exec nemo
+#bindsym $mod+m exec ncmpcc
+
+# Dmenu
+# bindsym $mod+d exec dmenu_run
+# Dmenu Desktop
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# Window Layout
+set $WS1  "1: "
+set $WS2  "2: "
+set $WS3  "3: "
+set $WS4  "4: "
+set $WS5  "5: "
+set $WS6  "6: "
+set $WS7  "7: "
+set $WS8  "8: "
+set $WS9  "9: "
+set $WS10 "10: "
+
+# Assign apps to WS
+assign [class="Google-chrome"] $WS1
+assign [class="Firefox"] $WS2
+assign [class="Gnome-calendar"] $WS3
+for_window [class="Spotify"] move to workspace $WS4
+# assign [class="URxvt"] move to workspace $WS4
+assign [class="Gimp-2.8"] $WS5
+assign [class="Oblogout"] $WS10
+
+# Force floating
+for_window [class="Gimp-2.8"] floating enable
+for_window [class="Pix"] floating enable
+
+# suspend i3
+bindsym $mod+Control+s exec systemctl suspend
+
+# Lock screen
+bindsym $mod+Control+l exec bash ~/.config/i3/lock.sh
+
+# Log out - No prompt
+bindsym $mod+Control+e exec i3-msg exit
+
+# Disable screen saver / Turn off blanking
+# xset s off
+# xset s noblank
+
+# Colors
+set $black          #000000
+set $white          #FFFFFF
+set $red            #FF0000
+set $green          #00FF00
+set $blue           #0000FF
+set $grey           #AAAAAA
+set $lighter-grey   #676E7D
+set $dark-grey      #2f343f
+set $off-white      #f3f4f5
+set $orange         #E53935
+
+#                       border               background          text                 indicator
+client.focused          $dark-grey           $dark-grey          $white               $FF000
+client.focused_inactive $dark-grey           $dark-grey          $lighter-grey        $FF000
+client.unfocused        $dark-grey           $dark-grey          $lighter-grey        $FF000
+client.urgent           $orange              $orange             $off-white           $FF000
+
+hide_edge_borders both
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+# bar {
+#         status_command i3blocks -c ~/.i3/i3blocks.conf
+#         status_command python /path/to/powerline/bindings/i3/powerline-i3.py
+#         font pango:PowerlineFont 12
+#         tray_output primary
+#         tray_padding 5px
+#         font pango:San Fransisco Display 9
+#         colors {
+#             separator  $FFFFFF
+#             background $dark-grey
+#             #                  border       background      text
+#             focused_workspace  $orange      $orange         $white
+#             inactive_workspace $dark-grey   $dark-grey      $grey
+#             urgent_workspace   $dark-grey   $dark-grey      $grey
+#             }
+# }
+
+# Audio Control
+# bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle #&& notify-send "Mute"
+# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #&& notify-send "Volume -" -t 1
+# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #&& notify-send "Volume +" -t 1 
+bindsym F1 exec pactl set-sink-mute 0 toggle #&& notify-send "Mute"
+bindsym F2 exec --no-startup-id pactl set-sink-volume 0 -5% #&& notify-send "Volume -" -t 1
+bindsym F3 exec --no-startup-id pactl set-sink-volume 0 +5% #&& notify-send "Volume +" -t 1 
+
+# Media Player
+# bindsym XF86AudioPrev exec mpc prev
+# bindsym XF86AudioNext exec mpc next
+# bindsym XF86AudioPlay exec mpc toggle
+bindsym F4 exec mpc prev
+bindsym F5 exec mpc toggle
+bindsym F6 exec mpc next
+
+# Calculator
+bindsym $mod+c exec gnome-calculator
+
+# Backlight
+# bindcode 232 exec echo 500 > /sys/class/backlight/intel_backlight/brightness
+# bindcode 233 exec x=cat /sys/class/backlight/intel_backlight/brightness; x+=5 > /sys/class/backlight/intel_backlight/brightness
+
+# Screenshot
+bindsym Print exec gnome-screenshot
+
+# Wallpaper
+exec_always feh --bg-fill /home/shane/pictures/treebg.jpg
+
+##############  END OF CONFIG    ##################
+
+
+# kill focused window
+bindsym $mod+q kill
+
+# use Mouse+Mod1 to drag floating windows to their wanted position
+floating_modifier $mod
+
+# switch to workspace
+bindsym $mod+1 workspace $WS1
+bindsym $mod+2 workspace $WS2
+bindsym $mod+3 workspace $WS3
+bindsym $mod+4 workspace $WS4
+bindsym $mod+5 workspace $WS5
+bindsym $mod+6 workspace $WS6
+bindsym $mod+7 workspace $WS7
+bindsym $mod+8 workspace $WS8
+bindsym $mod+9 workspace $WS9
+bindsym $mod+0 workspace $WS10 
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $WS1
+bindsym $mod+Shift+2 move container to workspace $WS2
+bindsym $mod+Shift+3 move container to workspace $WS3
+bindsym $mod+Shift+4 move container to workspace $WS4
+bindsym $mod+Shift+5 move container to workspace $WS5
+bindsym $mod+Shift+6 move container to workspace $WS6
+bindsym $mod+Shift+7 move container to workspace $WS7
+bindsym $mod+Shift+8 move container to workspace $WS8
+bindsym $mod+Shift+9 move container to workspace $WS9
+bindsym $mod+Shift+0 move container to workspace $WS10
+
+# change focus
+bindsym Control+$left focus left
+bindsym Control+$down focus down
+bindsym Control+$up focus up
+bindsym Control+$right focus right
+
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# Focus movement
+set $up k
+set $down j
+set $left h
+set $right l
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+b split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym --whole-window $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# Move window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show/Hide Scratchpad
+# bindsym $mod+minus scratchpad show
+bindsym $mod+g [class="Gimp-2.8"] scratchpad show
+bindsym $mod+t [class="Gnome-terminal"] scratchpad show
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Restart i3 inplace
+bindsym $mod+Shift+r restartr
+
+# Exit with Notice
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 10 px or 10 ppt
+        bindsym $down       resize grow height 10 px or 10 ppt
+        bindsym $up         resize shrink height 10 px or 10 ppt
+        bindsym $right      resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 10 px or 10 ppt
+        bindsym Down        resize grow height 10 px or 10 ppt
+        bindsym Up          resize shrink height 10 px or 10 ppt
+        bindsym Right       resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
