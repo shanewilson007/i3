@@ -1,0 +1,103 @@
+! Fonts
+Xft.antialias:  1
+Xft.autohint:   0
+Xft.dpi:        96
+Xft.hinting:    1
+Xft.hintstyle:  hintfull
+Xft.lcdfilter:  lcddefault
+Xft.rgba:       rgb
+
+! xTerm*font: -*-terminus-medium-r-normal-*-12-*-*-*-c-*-*-1
+! XTerm*termName: xterm-256color
+!-------------
+! URxvt Config
+!-------------
+
+URxvt*termName: rxvt-unicode
+URxvt.cursorBlink: true
+URxvt.geometry: 85x25
+URxvt.borderWidth: 0
+URxvt.internalBorder: 3
+URxvt.font: xft:Monospace:size=10, xft:DejaVu Sans Mono for Powerline:size=10
+URxvt.boldFont: xft:Monospace:size=10, xft:DejaVu Sans Mono Bold for Powerline:size=10
+URxvt.scrollBar: false
+URxvt.perl-ext-common: default,matcher
+URxvt.urlLauncher: chromium
+URxvt.colorUL: #e08175
+URxvt.matcher.button: 1
+URxvt.urgentOnBell: true
+
+urxvt*foreground: #f2f2f2
+urxvt*background: #101010
+
+! color1    red
+! color2    green
+! color3    yellow
+! color4    blue
+! color5    purple
+! color6    cyan
+! color7    white
+
+! Normal
+urxvt*color0:    #6c6c6c
+urxvt*color1:    #e9897c
+urxvt*color2:    #b6e77d
+urxvt*color3:    #ecebbe
+! urxvt*color4:    #a9cdeb
+urxvt*color4:    #0000ff
+urxvt*color5:    #ea96eb
+urxvt*color6:    #c9caec
+! urxvt*color7:    #f2f2f2
+urxvt*color7:    #ffffff
+
+! Light
+urxvt*color8:    #747474
+urxvt*color9:    #f99286
+urxvt*color10:    #c3f786
+urxvt*color11:    #fcfbcc
+urxvt*color12:    #b6defb
+urxvt*color13:    #fba1fb
+urxvt*color14:    #d7d9fc
+! urxvt*color15:    #e2e2e2
+urxvt*color15:    #ffffff
+
+! ! personalized
+! *.background: #151515
+! *.foreground: #f0f0f0
+! 
+! ! Black + DarkGrey
+! *.color0:  #282828
+! *.color8:  #928374
+! 
+! ! DarkRed + Red
+! *.color1:  #cc241d
+! *.color9:  #fb4934
+! 
+! ! DarkGreen + Green
+! *.color2:  #98971a
+! *.color10: #b8bb26
+! 
+! ! DarkYellow + Yellow
+! *.color3:  #d79921
+! *.color11: #fabd2f
+! 
+! ! DarkBlue + Blue
+! *.color4:  #458588
+! *.color12: #83a598
+! 
+! ! DarkMagenta + Magenta
+! *.color5:  #b16286
+! *.color13: #d3869b
+! 
+! ! DarkCyan + Cyan
+! *.color6:  #689d6a
+! *.color14: #8ec07c
+! 
+! ! LightGrey + White
+! *.color7:  #a89984
+! *.color15: #ebdbb2
+! 
+! !! man colors
+! URxvt.colorIT: #87af5f
+! URxvt.colorBD: #d7d7d7
+! URxvt.colorUL: #87afd7
