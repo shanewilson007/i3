@@ -1,93 +1,79 @@
 ZSH_THEME="shane"
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export LANG=en_US.UTF-8
+export PATH=$HOME/bin:/usr/local/bin:$PATH:/snap/bin:/bi/npm:~/.local/bin:/opt/lampp/bin:/opt/lampp/xampp:~/virtualenvs/autoadmin/bin/python3
+bindkey -v
 
-# export MANPATH="/usr/local/man:$MANPATH"
-# CASE_SENSITIVE="true"
-# HYPHEN_INSENSITIVE="true"
-# DISABLE_AUTO_UPDATE="true"
-# export UPDATE_ZSH_DAYS=13
-# DISABLE_LS_COLORS="true"
-# DISABLE_AUTO_TITLE="true"
-# Command auto-correction
-# ENABLE_CORRECTION="true"
-# COMPLETION_WAITING_DOTS="true"
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-# HIST_STAMPS="mm/dd/yyyy"
-# ZSH_CUSTOM=/path/to/new-custom-folder
+# VCXSRV
+# export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+# export LIBGL_ALWAYS_INDIRECT=true
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# PROJECT_PATHS=(~/dev/work/django ~/dev/work/python)
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+# VirtualEnv
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
+# source ~/.local/bin/virtualenvwrapper.sh
 
+DISABLE_LS_COLORS="true"
 plugins=(
-git
-dircycle
-dirpersist
-tmux
-web-search
-autojump
-pj
-theme
-vi-mode
+  dircycle
+  dirpersist
+  git
+  history
+  jsontools
+  pj
+  sudo
+  vi-mode
+  virtualenv
+  web-search
+  z
+  zsh-autosuggestions
 )
-
-PROJECT_PATHS=(~/programming/python/)
 export ZSH="/home/shane/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
 
+COMPLETION_WATING_DOTS="true"
 
-# User configuration
-
-# FFF
-f() {
-    fff "$@"
-    cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
+# Vim-mode Indicator
+PS1+='${VIMODE}'
+function zle-line-init zle-keymap-select {
+  DOLLAR='%B%F{green}$%f%b '
+  GIANT_I='%B%F{red}N%f%b '
+  VIMODE="${${KEYMAP/vicmd/$GIANT_I}/(main|viins)/$DOLLAR}"
+  zle reset-prompt
 }
-
-# Horizontal Scroll
-synclient HorizTwoFingerScroll=1
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='mvim'
-fi
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='vim'
+# fi
 
 # User Aliases
-alias update='sudo apt-get update && sudo apt-get dist-upgrade'
 alias python='python3'
-alias py3='python3'
-alias py2='python2'
-alias rpi='ssh pi@192.168.0.15'
-alias sshpa='ssh shanewilson007@ssh.pythonanywhere.com'
 alias tk='tmux kill-ses -t '
 alias tka='killall tmux'
 alias ta='tmux attach-ses -t '
 alias tns='tmux new -s '
-alias scan='scangearmp2'
-alias google='gnome-www-browser'
-alias inputMonitor='udevadm monitor --udev'
-alias tos='sudo sh thinkorswim'
-alias bye='systemctl poweroff -i'
-alias reboot='systemctl reboot -i'
-alias rnetwork='sudo service network-manager restart'
-alias rdm='sudo service lightdm restart'
-alias reload='guard'
-alias open='gnome-open '
 alias jupyter='jupyter notebook'
 alias pdfmerge='pdfunite'
 alias server='python manage.py runserver_plus'
 alias shell='python manage.py shell_plus'
-alias reloadx='xrdb ~/.Xresources'
-alias music='ncmpcpp'
 alias trash='cd ~/.local/share/Trash'
-alias zconf='vi ~/.zshrc'
-alias workon='source ~/.virtualenvs/'
-alias tasks='gnome-system-monitor'
 alias jd='cd ~ && cd'
+alias cdrive='cd /mnt/c/Users/IT/'
+alias sz='source ~/.zshrc'
+alias xampp='sudo /opt/lampp/xampp start'
+alias ls='ls --color=auto'
+alias mstart='sudo /etc/init.d/mysql start'
 
-PATH=$PATH:~/.local/bin
+eval "$(dircolors -p | \
+    sed 's/ 4[0-9];/ 01;/; s/;4[0-9];/;01;/g; s/;4[0-9] /;01 /' | \
+    dircolors /dev/stdin)"
+
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
